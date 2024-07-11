@@ -1,55 +1,38 @@
-mkdir ./latency
+hourglass_num_cluster=144
+repeat=50
+device=cuda
+gpu_id=0
 
-repeat=200
-device=cpu
-gpu_id=7
-
-
-#for grid_stride in 1 2 4 8
-#do
-#for model in b l h
-#do
-#
-#CUDA_VISIBLE_DEVICES="$gpu_id" python grounded_sam_demo.py \
-#  --device ${device} \
-#  --config GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py \
-#  --grounded_checkpoint /home/Rhossolas.Lee/.cache/groundSAM/grounding_dino/groundingdino_swint_ogc.pth \
-#  --sam_hq_checkpoint /home/Rhossolas.Lee/.cache/groundSAM/segment_anything/sam_hq_vit_${model}.pth \
-#  --sam_checkpoint /home/Rhossolas.Lee/.cache/groundSAM/segment_anything/sam_vit_${model}.pth \
-#  --output_dir outputs/gridattn_strid_tmp \
-#  --box_threshold 0.3 --text_threshold 0.25 \
-#  --input_image /home/Rhossolas.Lee/code/IDEA/Grounded-Segment-Anything/assets/demo2.jpg \
-#  --grid_stride ${grid_stride} \
-#  --repeat_times ${repeat} \
-#  --text_prompt "dog" \
-#  > ./latency/sam_${model}_${device}_${grid_stride}.txt
-#
-#done
-#done
-
-
-
-export PYTHONPATH="/home/Rhossolas.Lee/code/Expedit-SAM:$PYTHONPATH"
+log_root=./log/latency
+mkdir -p ${log_root}
 
 for grid_stride in 1 2 4 8
 do
 for model in b l h
 do
 
-CUDA_VISIBLE_DEVICES="$gpu_id" python grounded_sam_demo.py \
+CUDA_VISIBLE_DEVICES="$gpu_id" python ./scripts/sam_demo.py \
   --device ${device} \
-  --config GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py \
-  --grounded_checkpoint /home/Rhossolas.Lee/.cache/groundSAM/grounding_dino/groundingdino_swint_ogc.pth \
-  --sam_hq_checkpoint /home/Rhossolas.Lee/.cache/groundSAM/segment_anything/sam_hq_vit_${model}.pth \
-  --sam_checkpoint /home/Rhossolas.Lee/.cache/groundSAM/segment_anything/sam_vit_${model}.pth \
-  --output_dir outputs/gridattn_strid_tmp \
-  --box_threshold 0.3 --text_threshold 0.25 \
-  --input_image /home/Rhossolas.Lee/code/IDEA/Grounded-Segment-Anything/assets/demo2.jpg \
+  --sam_checkpoint ./models/sam_vit_${model}.pth \
+  --boxes 800 517 1786 987 \
+  --input_image ./assets/demo2.jpg \
   --grid_stride ${grid_stride} \
   --repeat_times ${repeat} \
-  --text_prompt "dog" \
-  --hourglass_num_cluster 256 \
-  > ./latency/expedsam_${model}_${device}_${grid_stride}.txt
+  --hourglass_num_cluster $hourglass_num_cluster \
+  --use_hourglass \
+  --output_dir ${log_root} \
+  > ${log_root}/expedsam_${hourglass_num_cluster}_${model}_${grid_stride}_cuda.txt
+
+CUDA_VISIBLE_DEVICES="$gpu_id" python ./scripts/sam_demo.py \
+  --device ${device} \
+  --sam_checkpoint ./models/sam_vit_${model}.pth \
+  --boxes 800 517 1786 987 \
+  --input_image ./assets/demo2.jpg \
+  --grid_stride ${grid_stride} \
+  --repeat_times ${repeat} \
+  --hourglass_num_cluster $hourglass_num_cluster \
+  --output_dir ${log_root} \
+  > ${log_root}/sam_${model}_${grid_stride}_cuda.txt
 
 done
 done

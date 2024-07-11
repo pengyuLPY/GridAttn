@@ -14,7 +14,7 @@ print("SAM PATH:{}".format(segment_anything.__path__))
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser("Grounded-Segment-Anything Demo", add_help=True)
+    parser = argparse.ArgumentParser("GridAttn with SAM/Expedit-SAM FLOPs", add_help=True)
     parser.add_argument(
         "--sam_checkpoint", type=str, required=False, help="path to sam checkpoint file"
     )
@@ -22,8 +22,7 @@ if __name__ == "__main__":
     parser.add_argument("--grid_stride", type=int, default=1,
                         help="using str type, 1 means no use, positive value only use in global attn, negative vaule means use all attn")
     parser.add_argument("--hourglass_num_cluster", type=int, default=144)
-    parser.add_argument("--use_hourglass", action="store_true", help="using Expedit-SAM for prediction"
-)
+    parser.add_argument("--use_hourglass", action="store_true", help="using Expedit-SAM for prediction")
     args = parser.parse_args()
 
     # cfg

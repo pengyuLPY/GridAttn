@@ -2,3 +2,12 @@
 *.log
 *.idea/
 *__pycache__*
+
+*.swn
+*.swo
+*.swp
+
+*.pyc
+*.pyd
+
+*/log/*

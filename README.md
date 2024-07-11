@@ -1,7 +1,8 @@
 # Grid-Attention: Enhancing Computational Efficiency of Large Vision Models without Fine-Tuning 00
 
 ## Integrating GridAttn On SAM and Expedit-SAM
-fork from https://github.com/Expedit-LargeScale-Vision-Transformer/Expedit-SAM.git
+fork Expedit-SAM from https://github.com/Expedit-LargeScale-Vision-Transformer/Expedit-SAM.git
+fork detectron2 from 
 
 ### Install envoriment
 ```

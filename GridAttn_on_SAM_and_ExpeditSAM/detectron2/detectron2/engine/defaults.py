@@ -112,6 +112,7 @@ Run on multiple machines:
     parser.add_argument("--sam_checkpoint", type=str, default="", help="path to sam checkpoint")
     parser.add_argument("--hourglass_num_cluster", type=int, default=144,
                         help="hourglass_num_cluster for Expedit-SAM")
+    parser.add_argument("--use_hourglass", action="store_true", help="using Expedit-SAM for prediction")
 
     parser.add_argument("--config-file", default="", metavar="FILE", help="path to config file")
     parser.add_argument(

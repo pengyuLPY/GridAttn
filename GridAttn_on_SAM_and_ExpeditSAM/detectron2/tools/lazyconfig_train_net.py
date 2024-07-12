@@ -26,7 +26,7 @@ from detectron2.engine import (
     launch,
 )
 from detectron2.engine.defaults import create_ddp_model
-from detectron2.evaluation import inference_on_dataset, print_csv_format, sam_inference_on_dataset, sam_splitImage_inference_on_dataset
+from detectron2.evaluation import inference_on_dataset, print_csv_format, sam_inference_on_dataset
 from detectron2.utils import comm
 
 logger = logging.getLogger("detectron2")
@@ -45,12 +45,7 @@ def do_test(args, cfg, model):
         )
         print_csv_format(ret)
         return ret
-    # if "evaluator" in cfg.dataloader:
-    #     ret = sam_splitImage_inference_on_dataset(
-    #         args, model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator)
-    #     )
-    #     print_csv_format(ret)
-    #     return ret
+
 
 def do_train(args, cfg):
     """

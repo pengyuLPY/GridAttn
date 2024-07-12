@@ -3,9 +3,9 @@
 ## Integrating GridAttn to SAM and Expedit-SAM
 We fork the repos from the following and intergrate GridAttn on them:
 -   Expedit-SAM: https://github.com/Expedit-LargeScale-Vision-Transformer/Expedit-SAM.git 
-(commit id: 75a1c30d66ad66999cb80fdfc85829f7e71dcacf)    
+(Based commit id: 75a1c30d66ad66999cb80fdfc85829f7e71dcacf)    
 -   Detectron2: https://github.com/facebookresearch/detectron2    
-(commit id: 7d2e68dbe452fc422268d40ac185ea2609affca8)
+(Based commit id: 7d2e68dbe452fc422268d40ac185ea2609affca8)
 
 ### Install envoriment
 ```
@@ -88,4 +88,29 @@ ln -sf YOUR_PATH/LVIS datasets/lvis
 # evaluate on coco and lvis datasets
 sh eval_sam_coco.sh
 sh eval_sam_lvis.sh
+```
+
+
+## Integrating GridAttn to SD
+We fork the repos from the following and intergrate GridAttn on them:
+-   diffusers: https://github.com/huggingface/diffusers.git
+(Based commit id: 3045fb276352681f6b9075956e599dd8ef571872)
+
+### Install envoriment
+```
+# Init env
+conda create -n gridattn_sd python=3.8.3
+conda activate gridattn_sd
+
+# Install pytorch
+pip install torch==2.0.0 torchvision==0.15.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Install diffusers
+cd GridAttn_on_SD/diffusers
+pip install -v -e .
+cd ../../
+
+# Install detectron2 for COCO and LVIS evaluation
+cd GridAttn_on_SAM_and_ExpeditSAM/detectron2
+pip install -v -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```

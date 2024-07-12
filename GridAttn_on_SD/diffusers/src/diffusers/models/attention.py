@@ -214,7 +214,7 @@ class BasicTransformerBlock(nn.Module):
         final_dropout: bool = False,
         grid_stride: int = 1,
     ):
-        print("lipengyu attn", grid_stride)
+        print("GridAttn whose stride is {}".format(grid_stride))
         super().__init__()
         self.only_cross_attention = only_cross_attention
 

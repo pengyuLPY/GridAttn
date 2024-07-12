@@ -32,11 +32,10 @@ cd GridAttn_on_SAM_and_ExpeditSAM/detectron2
 pip install -v -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-### Link the SAM ckpts
+### Link the models
 ```
 # link SAM models
 cd GridAttn_on_SAM_and_ExpeditSAM/Expedit-SAM
-# To 'GridAttn_on_SAM_and_ExpeditSAM/Expedit-SAM' folder
 ln -sf YOUR_PATH/sam_vit_b_01ec64.pth models/sam_vit_b.pth
 ln -sf YOUR_PATH/sam_vit_l_0b3195.pth models/sam_vit_l.pth
 ln -sf YOUR_PATH/sam_vit_h_4b8939.pth models/sam_vit_h.pth
@@ -105,12 +104,51 @@ conda activate gridattn_sd
 # Install pytorch
 pip install torch==2.0.0 torchvision==0.15.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
+# Install other packages 
+pip install transformers -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
 # Install diffusers
 cd GridAttn_on_SD/diffusers
-pip install -v -e .
-cd ../../
-
-# Install detectron2 for COCO and LVIS evaluation
-cd GridAttn_on_SAM_and_ExpeditSAM/detectron2
 pip install -v -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
+cd ../../
+```
+
+### Link the models
+```
+# link SD models
+cd GridAttn_on_SD/scripts
+ln -sf YOUR_PATH/stable-diffusion-2-1 models/stable-diffusion-2-1-gridattn
+
+#copy GridAttn config to unet folder
+cp models/unet_config_gridattn.json models/stable-diffusion-2-1/unet/config.json
+```
+
+### Run a demo of expedit-sam, sam, and gridattn
+```
+cd GridAttn_on_SD/scripts
+python demo.py
+# when grid_stride=1 means do not employ the GridAttn
+cd ../../
+```
+
+
+
+## Citation
+```latex
+@article{liang2022expediting,
+  title={Expediting large-scale vision transformer for dense prediction without fine-tuning},
+  author={Liang, Weicong and Yuan, Yuhui and Ding, Henghui and Luo, Xiao and Lin, Weihong and Jia, Ding and Zhang, Zheng and Zhang, Chao and Hu, Han},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  pages={35462--35477},
+  year={2022}
+}
+
+@article{kirillov2023segany,
+  title={Segment Anything}, 
+  author={Kirillov, Alexander and Mintun, Eric and Ravi, Nikhila and Mao, Hanzi and Rolland, Chloe and Gustafson, Laura and Xiao, Tete and Whitehead, Spencer and Berg, Alexander C. and Lo, Wan-Yen and Doll{\'a}r, Piotr and Girshick, Ross},
+  journal={arXiv:2304.02643},
+  year={2023}
+}
 ```

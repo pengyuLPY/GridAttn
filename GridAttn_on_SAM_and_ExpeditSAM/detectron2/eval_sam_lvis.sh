@@ -1,5 +1,5 @@
 hourglass_num_cluster=144
-gpu_id=1
+gpu_id=0
 log_root='./log/LVIS'
 mkdir -p ${log_root}
 

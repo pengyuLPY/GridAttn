@@ -12,3 +12,5 @@
 
 */log/
 *.pth
+*/.mim/*
+*/mmsegmentation.egg-info/*

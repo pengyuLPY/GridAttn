@@ -1,11 +1,11 @@
 # Grid-Attention: Enhancing Computational Efficiency of Large Vision Models without Fine-Tuning
 
 ## Integrating GridAttn to SAM and Expedit-SAM
-We fork the repos from the following and intergrate GridAttn on them:
--   Expedit-SAM: https://github.com/Expedit-LargeScale-Vision-Transformer/Expedit-SAM.git 
-(Based commit id: 75a1c30d66ad66999cb80fdfc85829f7e71dcacf)    
--   Detectron2: https://github.com/facebookresearch/detectron2    
-(Based commit id: 7d2e68dbe452fc422268d40ac185ea2609affca8)
+We fork the repos from the following and intergrate GridAttn on them:    
+-   Expedit-SAM: https://github.com/Expedit-LargeScale-Vision-Transformer/Expedit-SAM.git     
+(Based commit id: 75a1c30d66ad66999cb80fdfc85829f7e71dcacf, main branch)    
+-   Detectron2: https://github.com/facebookresearch/detectron2        
+(Based commit id: 7d2e68dbe452fc422268d40ac185ea2609affca8, main branch)
 
 ### Install envoriment
 ```
@@ -24,7 +24,7 @@ pip install lvis
 
 # Install Expedit-SAM
 cd GridAttn_on_SAM_and_ExpeditSAM/Expedit-SAM
-pip install -v -e .
+pip install -v -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
 cd ../../
 
 # Install detectron2 for COCO and LVIS evaluation
@@ -92,8 +92,8 @@ sh eval_sam_lvis.sh
 
 ## Integrating GridAttn to SD
 We fork the repos from the following and intergrate GridAttn on them:
--   diffusers: https://github.com/huggingface/diffusers.git
-(Based commit id: 3045fb276352681f6b9075956e599dd8ef571872)
+-   diffusers: https://github.com/huggingface/diffusers.git    
+(Based commit id: 3045fb276352681f6b9075956e599dd8ef571872, main branch)
 
 ### Install envoriment
 ```
@@ -124,7 +124,7 @@ ln -sf YOUR_PATH/stable-diffusion-2-1 models/stable-diffusion-2-1-gridattn
 cp models/unet_config_gridattn.json models/stable-diffusion-2-1/unet/config.json
 ```
 
-### Run a demo of expedit-sam, sam, and gridattn
+### Run a demo of SD with gridattn
 ```
 cd GridAttn_on_SD/scripts
 python demo.py
@@ -132,6 +132,74 @@ python demo.py
 cd ../../
 ```
 
+
+## Integrating GridAttn to Segformer
+We fork the repos from the following and intergrate GridAttn on them:
+-   mmsegmentation: https://github.com/open-mmlab/mmsegmentation    
+(Based commit id: ca7c098767371e633f5672d128e5808dd9fb7634, master branch)
+
+### Install envoriment
+```
+# Init env
+conda create -n gridattn_seg python=3.8.3
+conda activate gridattn_seg
+
+# Install pytorch
+pip install torch==1.12.1 torchvision==0.13.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+# Install other packages 
+pip install openmim -i https://pypi.tuna.tsinghua.edu.cn/simple
+mim install mmcv-full==1.6.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Install mmsegmentation
+cd GridAttn_on_Segformer/mmsegmentation
+pip install -v -e . -i https://pypi.tuna.tsinghua.edu.cn/simple
+cd ../../
+```
+
+
+### Link the models
+```
+cd GridAttn_on_SD
+ln -sf YOUR_PATH ./models/
+cd ../
+```
+
+
+## Calculate latency for Segformer with Gridattn
+```
+cd GridAttn_on_Segformer/scripts/latency
+sh latency.sh
+cd ../../../
+```
+
+### Evaluate Segformer with Gridattn on ADE20K
+```
+cd GridAttn_on_Segformer/scripts/eval
+
+# link the dataset
+ln -sf YOUR_ADE20K_PATH ./data
+
+# run the script
+sh test.sh
+
+cd ../../../
+```
+
+
+### Train Segformer with Gridattn on ADE20K
+```
+cd GridAttn_on_Segformer/scripts/train_from_scratch
+
+# link the dataset
+ln -sf YOUR_ADE20K_PATH ./data
+
+# run the script
+sh train.sh
+
+cd ../../../
+```
 
 
 ## Citation
@@ -150,5 +218,22 @@ cd ../../
   author={Kirillov, Alexander and Mintun, Eric and Ravi, Nikhila and Mao, Hanzi and Rolland, Chloe and Gustafson, Laura and Xiao, Tete and Whitehead, Spencer and Berg, Alexander C. and Lo, Wan-Yen and Doll{\'a}r, Piotr and Girshick, Ross},
   journal={arXiv:2304.02643},
   year={2023}
+}
+
+@inproceedings{rombach2022high,
+  title={High-resolution image synthesis with latent diffusion models},
+  author={Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Bj{\"o}rn},
+  booktitle={Proceedings of the IEEE/CVF conference on computer vision and pattern recognition},
+  pages={10684--10695},
+  year={2022}
+}
+
+@article{xie2021segformer,
+  title={SegFormer: Simple and efficient design for semantic segmentation with transformers},
+  author={Xie, Enze and Wang, Wenhai and Yu, Zhiding and Anandkumar, Anima and Alvarez, Jose M and Luo, Ping},
+  journal={Advances in neural information processing systems},
+  volume={34},
+  pages={12077--12090},
+  year={2021}
 }
 ```

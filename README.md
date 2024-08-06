@@ -44,6 +44,7 @@ cd ../../
 # link VITDET models
 cd GridAttn_on_SAM_and_ExpeditSAM/detectron2
 ln -sf YOUR_PATH/cascade_mask_rcnn_vitdet_h/model_final_f05665.pkl models/coco_cascade_mask_rcnn_vitdet_h.pth
+cd ../../
 ```
 
 ### Run a demo of expedit-sam, sam, and gridattn
@@ -122,6 +123,8 @@ ln -sf YOUR_PATH/stable-diffusion-2-1 models/stable-diffusion-2-1-gridattn
 
 #copy GridAttn config to unet folder
 cp models/unet_config_gridattn.json models/stable-diffusion-2-1/unet/config.json
+
+cd ../../
 ```
 
 ### Run a demo of SD with gridattn
